@@ -15,16 +15,19 @@ function getDASByPendenciaDebitoSIEF(content, cnpj, razao) {
         const posValor = newContent.indexOf('Situação')
         newContent = newContent.slice(posValor + 8).trim()
         newContent = newContent.replace(/Notificação de lançamento:\s+\d{16}/gmi, '')
+        newContent = newContent.replace(/Notificação de lançamento:\s+\d{14}/gmi, '')
+        newContent = newContent.replace(/Notificação de lançamento:\s+\d{13}/gmi, '')
         newContent = newContent.replace('Pendência - Processo Fiscal (SIEF)', '')
         newContent = newContent.replace('Débito com Exigibilidade Suspensa (SIEF)', '')
+        newContent = newContent.replace('Pendência - Débito (SICOB)', '')
         // console.log(newContent)
         let array = newContent.trim().split('\n').filter(item => item !== '')
         let aux = 0
         let canReturn = false
         for (let index = 0; index < array.length; index++) {
-            if (aux == 0 && !array[index].includes('SIMPLES NAC')) {
-                continue
-            }
+           // if (aux == 0 && !array[index].includes('SIMPLES NAC')) {
+              //  continue
+          //  }
             canReturn = true
             if (aux === 5) {
                 string += array[index].trim() + '\n'
